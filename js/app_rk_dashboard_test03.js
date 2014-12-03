@@ -86,17 +86,17 @@ var cfg = {
           txnCount[commonNameMap[commonName]].family = family;
         }
         txnCount[commonNameMap[commonName]].total++;
-        if (d['eventDate'] === '') {
+        if ((d['eventDate'] === '')||(d['eventDate'] === undefined)) {
           if ((data[i]['post_date'] !== '')&&(data[i]['post_date'] !== undefined)) {
             data[i]['eventDate'] = data[i]['post_date'].split(' ')[0];
           }
           else {
             data[i]['eventDate'] = '無資料'
+            txnCount[commonNameMap[commonName]].nodate++;
           }
-          txnCount[commonNameMap[commonName]].nodate++;
         }
-        else {
-          var date = new Date(d['eventDate']);
+        if (data[i]['eventDate'] !== '無資料') {
+          var date = new Date(data[i]['eventDate']);
           var month = date.getMonth();
           var year = date.getFullYear();
 
