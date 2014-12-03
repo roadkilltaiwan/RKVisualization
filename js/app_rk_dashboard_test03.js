@@ -14,6 +14,21 @@ var lockedD = {};
 var btn_clicked = 'all';
 
 
+
+function init() {
+  txnCount = {};
+  commonNameCan = [];
+  commonNameMap = {};
+
+  nodeLocked = false;
+  lockedNode = {};
+  lockedD = {};
+
+  btn_clicked = 'all';
+}
+
+
+
 // Heat map configuration
 var cfg = {
   // radius should be small ONLY if scaleRadius is true (or small radius is intended)
@@ -210,6 +225,7 @@ d3RKDemoApp.directive('d3Dashboard', function () {
 
       scope.$watch('val', function (newVal, oldVal) {
 
+        init();
         // clear the elements inside of the directive
         svg.selectAll('*').remove();
         svg.on("click", function () { unlockAll();});
@@ -293,6 +309,8 @@ d3RKDemoApp.directive('d3Dashboard', function () {
           .on("mouseover", function (d) { showPopover.call(this, d); if (!nodeLocked) drawBar(d); })
           .on("mouseout", function (d) { removePopovers(d); })
           .on("click", function (d) { toggleLock(d); })
+
+        nodes.exit().remove();
 
         nodes.transition().duration(1000)
           .attr("r", function (d) { return d.radius; })
@@ -545,7 +563,10 @@ d3RKDemoApp.directive('d3Dashboard', function () {
         }
 
         // DRAW MAP
-        var map = new L.Map('maptest').setView(new L.LatLng(23.8, 121.1), 6).addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));
+        // TODO: need to fix "Error: Map container is already initialized."
+        if (map === undefined) {
+	        var map = new L.Map('maptest').setView(new L.LatLng(23.8, 121.1), 6).addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));
+        }
         var heatmapLayer = new HeatmapOverlay(cfg);
         map.addLayer(heatmapLayer);
         scope.$watch (
