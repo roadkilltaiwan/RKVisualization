@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html ng-app="d3RKDemoApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Roadkill.tw視覺化測試</title>
+    <link href="./css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css"><script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
+    <script src="./lib/d3.v3.js"></script>
+    <script src="./lib/angular.js"></script>
+    <script src="./lib/jquery.min.js"></script>
+    <script src="./lib/bootstrap.js"></script>
+    <script src="./lib/underscore.js"></script>
+    <script src="js/app_rk_dashboard_test03.js"></script>
+    <script src="./lib/heatmap.min.js"></script>
+    <script src="./lib/leaflet-heatmap.js"></script>
+
+    <style type="text/css">
+
+#maptest {
+width: 300px;
+height: 400px;
+position: fixed;
+top:400px;
+}
+path {
+fill: #000;
+fill-opacity: .2;
+stroke: #fff;
+stroke-width: 1.5px;
+}
+path:hover {
+fill: brown;
+fill-opacity: .7;
+}
+
+
+rect.month_bar_rect {
+  fill: silver;
+}
+
+rect.month_bar_rect:hover {
+  fill: red;
+}
+
+text.month_bar_text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.node-focus {
+  //fill: yellow!important;
+  stroke: yellow!important;
+  opacity: 1!important;
+}
+
+.node-locked {
+  //fill: #FF8C00!important;
+  stroke: #FF8C00!important;
+  opacity: 1!important;
+}
+
+
+.axis {
+  font-color: white;
+}
+
+      body {
+        background-color: black;
+        padding-left: 50px;
+      }
+      circle {
+        stroke: white;
+        stroke-width: 2px;
+        opacity: .5;
+      }
+      .btn-group {
+        margin-left: 330px;
+      }
+      .label {
+        fill: white;
+        font-size: 16px;
+      }
+
+.control-menu {
+  position: fixed;
+  z-index: 9;
+}
+
+#barchart {
+  top: 150px;
+  position: fixed;
+}
+
+svg.circle_legend {
+  top: 0px;
+  left: 650px;
+  position: fixed;
+}
+
+d3-dashboard svg {
+  top: 70px;
+  left: 100px;
+  position: absolute;
+}
+
+.btn-group {
+  z-index: 10;
+}
+
+    </style>
+
+  </head>
+
+	<body ng-controller="AppCtrl">
+
+    <div class="btn-group" data-toggle="buttons" style='position:fixed; left:0; margin-left:100px'>
+      <label class="btn btn-primary active" id="all">
+        <input type="radio" name="options"> 全部
+      </label>
+      <label class="btn btn-primary" id="family">
+        <input type="radio" name="options"> 科
+      </label>
+      <label class="btn btn-primary" id="name">
+        <input type="radio" name="options"> 種
+      </label>
+      <label class="btn btn-primary" id="diff">
+        <input type="radio" name="options"> 年間差異
+      </label>
+      <!--label class="btn btn-primary" id="cylinders">
+        <input type="radio" name="options"> Cylinders
+      </label-->
+    </div>
+
+          <table class="control-menu" style='top:30px'>
+          <tr><td>
+	  <h1>roadkill.tw</h1>
+          </td></tr>
+          <tr><td>
+	  <form ng-submit="getCommitData()">
+	    TSV Data: <input ng-model="tsv_data_loc" value="./data/rk_general.tsv" ng-init="tsv_data_loc='./data/rk_general.tsv'"></input>
+	    <input type="submit" value="Get Data">
+	  </form>
+	  <!--p class="error">{{error}}</p-->
+          </td></tr>
+          <tr><td>
+
+</td></tr>
+          <tr><td>
+          </td></tr>
+</table>
+	  <d3-dashboard val="data">
+
+	  <!--div id="barchart"><svg></svg></div-->
+          </d3-dashboard>
+	  <div id="barchart"><svg></svg></div>
+	  <div id="maptest"></div>
+	</body>
+</html>
