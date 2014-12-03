@@ -72,7 +72,7 @@ var cfg = {
         }
         txnCount[commonNameMap[commonName]].total++;
         if (d['eventDate'] === '') {
-          if (data[i]['post_date'] !== '') {
+          if ((data[i]['post_date'] !== '')&&(data[i]['post_date'] !== undefined)) {
             data[i]['eventDate'] = data[i]['post_date'].split(' ')[0];
           }
           else {
@@ -555,8 +555,11 @@ d3RKDemoApp.directive('d3Dashboard', function () {
           function (newP, oldP) {
             if (newP.length != 0) {
               var ffss = {max: 3000, data: newP};
-              heatmapLayer.setData(ffss);
             }
+            else {
+              var ffss = {max: 3000, data: [{lat:23.8, lng:121.1, count:0}]};
+            }
+            heatmapLayer.setData(ffss);
           }
         )
 
